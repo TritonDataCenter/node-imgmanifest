@@ -1,0 +1,17 @@
+{
+  "name": "imgmanifest",
+  "description": "Library for working with SmartOS/SDC image manifests",
+  "version": "1.0.0",
+  "author": "Joyent (joyent.com)",
+  "private": true,
+  "dependencies": {
+    "assert-plus": "0.1.2"
+  },
+  "devDependencies": {
+    "jshint": "0.5",
+    "nodeunit": "0.7.4"
+  },
+  "engines": {
+    "node": ">=0.8"
+  }
+}
