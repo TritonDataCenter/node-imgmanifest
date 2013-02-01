@@ -14,7 +14,7 @@
 
 
 
-//---- Exports
+// ---- Exports
 
 module.exports = {
 
