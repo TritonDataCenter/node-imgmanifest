@@ -6,6 +6,7 @@
 
 var format = require('util').format;
 var exec = require('child_process').exec;
+var path = require('path');
 
 
 // node-tap API
@@ -16,10 +17,19 @@ var after = tap4nodeunit.after;
 var before = tap4nodeunit.before;
 var test = tap4nodeunit.test;
 
+var TOP = path.resolve(__dirname, '..');
+var info = require(path.resolve(TOP, 'package.json'));
+var main = path.resolve(TOP, info.main);
 
 
 test('can require it', function (t) {
-    var imgmanifest = require('imgmanifest');
+    var imgmanifest = require(main);
+    t.end();
+});
+
+test('exports', function (t) {
+    var imgmanifest = require(main);
+    t.ok(imgmanifest.upgradeManifest);
     t.end();
 });
 
