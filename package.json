@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "author": "Joyent (joyent.com)",
   "private": true,
+  "main": "./lib/imgmanifest.js",
   "dependencies": {
     "assert-plus": "0.1.2"
   },
