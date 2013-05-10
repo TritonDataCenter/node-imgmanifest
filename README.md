@@ -27,10 +27,52 @@ manifests. This is the library for it.
 
     var imgmanifest = require('imgmanifest');
 
+    // The latest Image manifest format version, i.e. the 'v' field
+    // in a manifest.
+    console.log(imgmanifest.V);
+
+    // Upgrade a manifest to the latest manifest format version.
     var manifest = imgmanifest.upgradeManifest(manifest);
-    
-    //XXX Not yet implemented:
-    var errors = imgmanifest.validateManifest(manifest);
+
+    // Validate a manifest, according to the "minimal" requirements.
+    // "Minimal" requirements are those that, e.g., 'imgadm install'
+    // requires and that 'imgadm create' creates. It does require
+    // the manifest to include fields that are added by an IMGAPI
+    // repository. Returns null if the manifest is valid.
+    var errs = imgmanifest.validateMinimalManifest(manifest);
+
+
+Note: Current implementation of manifest validation here is **incomplete**.
+
+
+# Validation Errors
+
+The `errs` returned by a `validate*Manifest` function is an array of
+objects, e.g.:
+
+    [
+        {
+            "field": "name",
+            "code": "MissingParameter",
+        },
+        {
+            "field": "os",
+            "code": "Invalid",
+            "message": "invalid os, \"my-os\", must be one of: smartos, linux, windows, other"
+        }
+    ]
+
+Each error object will always include "field" and "code" keys and **may**
+include a "message" string field. Current error "code" values are:
+
+||MissingParameter||A required parameter was not provided.||
+||Invalid||The formatting of the field is invalid.||
+
+
+Note: This error format is based on
+<https://mo.joyent.com/docs/eng/master/#error-handling>.
+
+
 
 
 # License
