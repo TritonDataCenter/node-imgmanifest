@@ -73,8 +73,6 @@ Note: This error format is based on
 <https://mo.joyent.com/docs/eng/master/#error-handling>.
 
 
-
-
 # License
 
 CDDL

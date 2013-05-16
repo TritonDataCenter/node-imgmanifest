@@ -1,5 +1,11 @@
 # node-imgmanifest Changelog
 
+# 1.1.1
+
+- HEAD-1665: Properly upgrade 'disabled' and 'state' from a pre-v2 image
+  manifest. While DSAPI did not support a 'disabled' field, MAPI in
+  SDC 6.5 did, so don't hardcode `false`.
+
 # 1.1.0
 
 - IMGAPI-95: A start at `validate*Manifest()` functions. A first cut if
