@@ -4,6 +4,8 @@
 
 - Allow upgrade of manifests without a 'files' element.
 
+- IMGAPI-216: Add "bsd" and "illumos" as options for "os" field.
+
 - HEAD-1665: Properly upgrade 'disabled' and 'state' from a pre-v2 image
   manifest. While DSAPI did not support a 'disabled' field, MAPI in
   SDC 6.5 did, so don't hardcode `false`.
