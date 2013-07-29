@@ -22,6 +22,37 @@ var info = require(path.resolve(TOP, 'package.json'));
 var main = path.resolve(TOP, info.main);
 var imgmanifest = require(main);
 
+// ---- helpers
+
+function validateManifest(fn, t, expect) {
+    var errs = fn.call(null, expect.manifest);
+    if (!expect.errs) {
+        t.equal(expect.errs, errs,
+            format('expected no errs, got %j', errs));
+    } else {
+        t.equal(expect.errs.length, errs.length, format(
+            'expected %d errs, got %d', expect.errs.length, errs.length));
+        for (var i = 0; i < errs.length; i++) {
+            var got = errs[i];
+            var expected = expect.errs[i];
+            if (expected.message) {
+                if (expected.message.test) {
+                    t.ok(expected.message.test(got.message), format(
+                        'expected errs[%d].message /%s/, got "%s"',
+                        i, expected.message, got.message));
+                } else {
+                    t.equal(expected.message, got.message, format(
+                        'expected errs[%d].message "%s", got "%s"',
+                        i, expected.message, got.message));
+                }
+                delete got.message;
+                delete expected.message;
+            }
+            t.deepEqual(expected, got);
+        }
+    }
+    t.end();
+}
 
 // ---- misc tests
 
@@ -97,33 +128,7 @@ var MINIMAL_VALIDATIONS = [
 
 MINIMAL_VALIDATIONS.forEach(function (expect) {
     test(format('validateMinimalManifest: %s', expect.name), function (t) {
-        var errs = imgmanifest.validateMinimalManifest(expect.manifest);
-        if (!expect.errs) {
-            t.equal(expect.errs, errs,
-                format('expected no errs, got %j', errs));
-        } else {
-            t.equal(expect.errs.length, errs.length, format(
-                'expected %d errs, got %d', expect.errs.length, errs.length));
-            for (var i = 0; i < errs.length; i++) {
-                var got = errs[i];
-                var expected = expect.errs[i];
-                if (expected.message) {
-                    if (expected.message.test) {
-                        t.ok(expected.message.test(got.message), format(
-                            'expected errs[%d].message /%s/, got "%s"',
-                            i, expected.message, got.message));
-                    } else {
-                        t.equal(expected.message, got.message, format(
-                            'expected errs[%d].message "%s", got "%s"',
-                            i, expected.message, got.message));
-                    }
-                    delete got.message;
-                    delete expected.message;
-                }
-                t.deepEqual(expected, got);
-            }
-        }
-        t.end();
+        validateManifest(imgmanifest.validateMinimalManifest, t, expect);
     });
 });
 
@@ -252,7 +257,7 @@ var DC_VALIDATIONS = [
     {
         name: 'bad public',
         errs: [
-            {field: 'public', code: 'Invalid'}
+            { field: 'public', code: 'Invalid', message: /invalid value/ }
         ],
         manifest: {
             'v': 2,
@@ -273,33 +278,7 @@ var DC_VALIDATIONS = [
 
 DC_VALIDATIONS.forEach(function (expect) {
     test(format('validateDcManifest: %s', expect.name), function (t) {
-        var errs = imgmanifest.validateDcManifest(expect.manifest);
-        if (!expect.errs) {
-            t.equal(expect.errs, errs,
-                format('expected no errs, got %j', errs));
-        } else {
-            t.equal(expect.errs.length, errs.length, format(
-                'expected %d errs, got %d', expect.errs.length, errs.length));
-            for (var i = 0; i < errs.length; i++) {
-                var got = errs[i];
-                var expected = expect.errs[i];
-                if (expected.message) {
-                    if (expected.message.test) {
-                        t.ok(expected.message.test(got.message), format(
-                            'expected errs[%d].message /%s/, got "%s"',
-                            i, expected.message, got.message));
-                    } else {
-                        t.equal(expected.message, got.message, format(
-                            'expected errs[%d].message "%s", got "%s"',
-                            i, expected.message, got.message));
-                    }
-                    delete got.message;
-                    delete expected.message;
-                }
-                t.deepEqual(expected, got);
-            }
-        }
-        t.end();
+        validateManifest(imgmanifest.validateDcManifest, t, expect);
     });
 });
 
@@ -412,32 +391,102 @@ var OPTIONAL_VALIDATIONS = [
 OPTIONAL_VALIDATIONS.forEach(function (expect) {
     test(format('validateMinimalManifest (optional fields): %s', expect.name),
     function (t) {
-        var errs = imgmanifest.validateMinimalManifest(expect.manifest);
-        if (!expect.errs) {
-            t.equal(expect.errs, errs,
-                format('expected no errs, got %j', errs));
-        } else {
-            t.equal(expect.errs.length, errs.length, format(
-                'expected %d errs, got %d', expect.errs.length, errs.length));
-            for (var i = 0; i < errs.length; i++) {
-                var got = errs[i];
-                var expected = expect.errs[i];
-                if (expected.message) {
-                    if (expected.message.test) {
-                        t.ok(expected.message.test(got.message), format(
-                            'expected errs[%d].message /%s/, got "%s"',
-                            i, expected.message, got.message));
-                    } else {
-                        t.equal(expected.message, got.message, format(
-                            'expected errs[%d].message "%s", got "%s"',
-                            i, expected.message, got.message));
-                    }
-                    delete got.message;
-                    delete expected.message;
-                }
-                t.deepEqual(expected, got);
-            }
+        validateManifest(imgmanifest.validateMinimalManifest, t, expect);
+    });
+});
+
+
+var PUBLIC_VALIDATIONS = [
+    {
+        name: 'good, public',
+        errs: null,
+        manifest: {
+            'v': 2,
+            'uuid': '1f9b7958-289e-4ea3-8f88-5486a40d6823',
+            'name': 'foo',
+            'version': '1.2.3',
+            'type': 'zone-dataset',
+            'os': 'smartos',
+            'owner': '930896af-bf8c-48d4-885c-6573a94b1853',
+            'disabled': false,
+            'activated': false,
+            'state': 'unactivated',
+            'public': true
         }
-        t.end();
+    },
+    {
+        name: 'bad public',
+        errs: [
+            { field: 'public', code: 'Invalid', message: /private/ }
+        ],
+        manifest: {
+            'v': 2,
+            'uuid': '1f9b7958-289e-4ea3-8f88-5486a40d6823',
+            'name': 'foo',
+            'version': '1.2.3',
+            'type': 'zone-dataset',
+            'os': 'smartos',
+            'owner': '930896af-bf8c-48d4-885c-6573a94b1853',
+            'disabled': false,
+            'activated': false,
+            'state': 'unactivated',
+            'public': false
+        }
+    }
+];
+
+
+PUBLIC_VALIDATIONS.forEach(function (expect) {
+    test(format('validatePublicManifest (optional fields): %s', expect.name),
+    function (t) {
+        validateManifest(imgmanifest.validatePublicManifest, t, expect);
+    });
+});
+
+
+var PRIVATE_VALIDATIONS = [
+    {
+        name: 'good, private',
+        errs: null,
+        manifest: {
+            'v': 2,
+            'uuid': '1f9b7958-289e-4ea3-8f88-5486a40d6823',
+            'name': 'foo',
+            'version': '1.2.3',
+            'type': 'zone-dataset',
+            'os': 'smartos',
+            'owner': '930896af-bf8c-48d4-885c-6573a94b1853',
+            'disabled': false,
+            'activated': false,
+            'state': 'unactivated',
+            'public': false
+        }
+    },
+    {
+        name: 'bad private',
+        errs: [
+            { field: 'public', code: 'Invalid', message: /public/ }
+        ],
+        manifest: {
+            'v': 2,
+            'uuid': '1f9b7958-289e-4ea3-8f88-5486a40d6823',
+            'name': 'foo',
+            'version': '1.2.3',
+            'type': 'zone-dataset',
+            'os': 'smartos',
+            'owner': '930896af-bf8c-48d4-885c-6573a94b1853',
+            'disabled': false,
+            'activated': false,
+            'state': 'unactivated',
+            'public': true
+        }
+    }
+];
+
+
+PRIVATE_VALIDATIONS.forEach(function (expect) {
+    test(format('validatePrivateManifest (optional fields): %s', expect.name),
+    function (t) {
+        validateManifest(imgmanifest.validatePrivateManifest, t, expect);
     });
 });
