@@ -87,7 +87,7 @@ var MINIMAL_VALIDATIONS = [
     {
         name: 'no version',
         errs: [
-            {field: 'version', code: 'MissingParameter'}
+            { field: 'version', code: 'MissingParameter' }
         ],
         manifest: {
             'v': 2,
@@ -100,8 +100,8 @@ var MINIMAL_VALIDATIONS = [
     {
         name: 'no name or version',
         errs: [
-            {field: 'name', code: 'MissingParameter'},
-            {field: 'version', code: 'MissingParameter'}
+            { field: 'name', code: 'MissingParameter' },
+            { field: 'version', code: 'MissingParameter' }
         ],
         manifest: {
             'v': 2,
@@ -113,7 +113,7 @@ var MINIMAL_VALIDATIONS = [
     {
         name: 'bad os',
         errs: [
-            {field: 'os', code: 'Invalid', message: /my-os/}
+            { field: 'os', code: 'Invalid', message: /my-os/ }
         ],
         manifest: {
             'v': 2,
@@ -153,7 +153,7 @@ var DC_VALIDATIONS = [
     {
         name: 'no version',
         errs: [
-            {field: 'version', code: 'MissingParameter'}
+            { field: 'version', code: 'MissingParameter' }
         ],
         manifest: {
             'v': 2,
@@ -170,8 +170,8 @@ var DC_VALIDATIONS = [
     {
         name: 'no name or version',
         errs: [
-            {field: 'name', code: 'MissingParameter'},
-            {field: 'version', code: 'MissingParameter'}
+            { field: 'name', code: 'MissingParameter' },
+            { field: 'version', code: 'MissingParameter' }
         ],
         manifest: {
             'v': 2,
@@ -205,7 +205,7 @@ var DC_VALIDATIONS = [
     {
         name: 'no owner',
         errs: [
-            {field: 'owner', code: 'MissingParameter'}
+            { field: 'owner', code: 'MissingParameter' }
         ],
         manifest: {
             'v': 2,
@@ -222,9 +222,9 @@ var DC_VALIDATIONS = [
     {
         name: 'no state, activated or disabled',
         errs: [
-            {field: 'disabled', code: 'MissingParameter'},
-            {field: 'activated', code: 'MissingParameter'},
-            {field: 'state', code: 'MissingParameter'}
+            { field: 'disabled', code: 'MissingParameter' },
+            { field: 'activated', code: 'MissingParameter' },
+            { field: 'state', code: 'MissingParameter' }
         ],
         manifest: {
             'v': 2,
@@ -272,6 +272,79 @@ var DC_VALIDATIONS = [
             'state': 'unactivated',
             'public': 'proto'
         }
+    },
+    {
+        name: 'missing published_at',
+        errs: [
+            { field: 'published_at', code: 'MissingParameter', message: /acti/ }
+        ],
+        manifest: {
+            'v': 2,
+            'uuid': '1f9b7958-289e-4ea3-8f88-5486a40d6823',
+            'name': 'foo',
+            'version': '1.2.3',
+            'type': 'zone-dataset',
+            'os': 'smartos',
+            'owner': '930896af-bf8c-48d4-885c-6573a94b1853',
+            'disabled': false,
+            'activated': true,
+            'state': 'active',
+            'files': [ {
+                'sha1': '3dcf0d8695bf81a05a6272ccdc5048dd025acceb',
+                'size': 121737890,
+                'compression': 'gzip'
+            } ]
+        }
+    },
+    {
+        name: 'bad zvol, no drivers',
+        errs: [
+            { field: 'nic_driver', code: 'MissingParameter' },
+            { field: 'disk_driver', code: 'MissingParameter' }
+        ],
+        manifest: {
+            'v': 2,
+            'uuid': '1f9b7958-289e-4ea3-8f88-5486a40d6823',
+            'name': 'foo',
+            'version': '1.2.3',
+            'description': 'good manifest',
+            'homepage': 'http://imgapi.co',
+            'eula': 'http://imgapi.co/eula',
+            'type': 'zvol',
+            'os': 'smartos',
+            'owner': '930896af-bf8c-48d4-885c-6573a94b1853',
+            'disabled': false,
+            'activated': true,
+            'published_at': '2012-11-02T22:46:45.992Z',
+            'state': 'unactivated',
+            'origin': 'f9f8d4e5-30d9-438e-88f7-ea745370049b',
+            'error': { message: 'no peers available' },
+            'files': [ {
+                'sha1': '3dcf0d8695bf81a05a6272ccdc5048dd025acceb',
+                'size': 121737890,
+                'compression': 'gzip'
+            } ],
+            'icon': false,
+            'acl': [ 'df6ea68c-6549-486c-9479-1d48d54ae066' ],
+            'requirements': {
+                'networks': [ {
+                    'name': 'net0',
+                    'description': 'public'
+                } ],
+                'ssh_key': true
+            },
+            'users': [
+                { 'name': 'root' },
+                { 'name': 'admin' },
+                { 'name': 'mongodb'}
+            ],
+            'billing_tags': [ 'xxl' ],
+            'traits': { 'provisionable': true },
+            'tags': { 'foo': 'bar' },
+            'generate_passwords': false,
+            'cpu_type': 'qemu64',
+            'image_size': 16384
+        }
     }
 ];
 
@@ -299,7 +372,7 @@ var OPTIONAL_VALIDATIONS = [
             'os': 'smartos',
             'owner': '930896af-bf8c-48d4-885c-6573a94b1853',
             'disabled': false,
-            'activated': false,
+            'activated': true,
             'state': 'unactivated',
             'origin': 'f9f8d4e5-30d9-438e-88f7-ea745370049b',
             'error': { message: 'no peers available' },
@@ -347,7 +420,7 @@ var OPTIONAL_VALIDATIONS = [
             'os': 'smartos',
             'owner': '930896af-bf8c-48d4-885c-6573a94b1853',
             'disabled': false,
-            'activated': false,
+            'activated': true,
             'state': 'unactivated',
             'origin': 'f9f8d4e5-30d9-438e-88f7-ea745370049b',
             'error': { message: 'no peers available' },
