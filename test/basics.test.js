@@ -308,11 +308,7 @@ var OPTIONAL_VALIDATIONS = [
                 'size': 121737890,
                 'compression': 'gzip'
             } ],
-            'icon': {
-                'contentMD5': '3dcf0d8695bf81a05a6272ccdc5048dd025acceb',
-                'contentType': 'image/png',
-                'size': 121890
-            },
+            'icon': false,
             'acl': [ 'df6ea68c-6549-486c-9479-1d48d54ae066' ],
             'requirements': {
                 'networks': [ {
@@ -326,9 +322,9 @@ var OPTIONAL_VALIDATIONS = [
                 { 'name': 'admin' },
                 { 'name': 'mongodb'}
             ],
-            'billingtag': [ 'xxl' ],
+            'billing_tags': [ 'xxl' ],
             'traits': { 'provisionable': true },
-            'tag': [ 'foo=bar' ],
+            'tags': { 'foo': 'bar' },
             'generate_passwords': false,
             'nic_driver': 'virtio',
             'disk_driver': 'virtio',
@@ -360,11 +356,7 @@ var OPTIONAL_VALIDATIONS = [
                 'size': 121737890,
                 'compression': 'gzip'
             } ],
-            'icon': {
-                'contentMD5': '3dcf0d8695bf81a05a6272ccdc5048dd025acceb',
-                'contentType': 'image/png',
-                'size': 121890
-            },
+            'icon': true,
             'acl': [ 'df6ea68c-6549-486c-9479-1d48d54ae066' ],
             'requirements': {
                 'networks': [ {
@@ -378,9 +370,9 @@ var OPTIONAL_VALIDATIONS = [
                 { 'name': 'admin' },
                 { 'name': 'mongodb'}
             ],
-            'billingtag': [ 'xxl' ],
+            'billing_tags': [ 'xxl' ],
             'traits': { 'provisionable': true },
-            'tag': [ 'foo=bar' ],
+            'tags': { 'foo': 'bar' },
             'generate_passwords': false,
             'inherited_directories': [ '/usr/bin' ]
         }
