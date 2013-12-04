@@ -152,7 +152,12 @@ var MINIMAL_VALIDATIONS = [
             version: '20131204T013417Z',
             tags: { homeric: true },
             owner: '930896af-bf8c-48d4-885c-6573a94b1853',
-            requirements: { min_platform: { '7.0': '20130729T063445Z', '6.5': '20120614T001014Z' } },
+            requirements: {
+                min_platform: {
+                    '7.0': '20130729T063445Z',
+                    '6.5': '20120614T001014Z'
+                }
+            },
             type: 'zone-dataset',
             os: 'smartos',
             origin: 'f669428c-a939-11e2-a485-b790efc0f0c1'
