@@ -22,10 +22,26 @@ var info = require(path.resolve(TOP, 'package.json'));
 var main = path.resolve(TOP, info.main);
 var imgmanifest = require(main);
 
+
 // ---- helpers
 
+function objCopy(obj, target) {
+    if (!target) {
+        target = {};
+    }
+    Object.keys(obj).forEach(function (k) {
+        target[k] = obj[k];
+    });
+    return target;
+}
+
+function deepObjCopy(obj) {
+    return JSON.parse(JSON.stringify(obj));
+}
+
 function validateManifest(fn, t, expect) {
-    var errs = fn.call(null, expect.manifest);
+    var manifest = deepObjCopy(expect.manifest);
+    var errs = fn.call(null, manifest);
     if (!expect.errs) {
         t.equal(expect.errs, errs,
             format('expected no errs, got %j', errs));
@@ -51,6 +67,9 @@ function validateManifest(fn, t, expect) {
             t.deepEqual(expected, got);
         }
     }
+    t.deepEqual(manifest, expect.manifest,
+        format('unexpected resultant manifest, got %j, expected %j',
+            manifest, expect.manifest));
     t.end();
 }
 
@@ -122,6 +141,21 @@ var MINIMAL_VALIDATIONS = [
             'version': '1.2.3',
             'type': 'zone-dataset',
             'os': 'my-os'
+        }
+    },
+    {
+        name: 'good minimal, requirements left alone?',
+        manifest: {
+            v: 2,
+            uuid: 'c153ced3-5978-cb4d-d068-e1c3b33c41ab',
+            name: 'Hecuba',
+            version: '20131204T013417Z',
+            tags: { homeric: true },
+            owner: '930896af-bf8c-48d4-885c-6573a94b1853',
+            requirements: { min_platform: { '7.0': '20130729T063445Z', '6.5': '20120614T001014Z' } },
+            type: 'zone-dataset',
+            os: 'smartos',
+            origin: 'f669428c-a939-11e2-a485-b790efc0f0c1'
         }
     }
 ];
