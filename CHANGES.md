@@ -1,5 +1,10 @@
 # node-imgmanifest Changelog
 
+# 1.1.2
+
+- Make 'public' a required field for `validateDcManifest`, `validatePublicManifest`,
+  and `validatePrivateManifest`.
+
 # 1.1.1
 
 - Allow upgrade of manifests without a 'files' element.
