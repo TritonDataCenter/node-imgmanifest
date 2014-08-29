@@ -10,11 +10,9 @@
 
 # node-imgmanifest -- a node.js lib for working with SmartOS image manifests
 
-Repository: <git@git.joyent.com:node-imgmanifest.git>
-Browsing: <https://mo.joyent.com/node-imgmanifest>
+Repository: <git@github.com:joyent/node-imgmanfiest.git>
+Browsing: <https://github.com/joyent/node-imgmanifest>
 Who: Trent Mick
-Tickets/bugs: <https://devhub.joyent.com/jira/browse/IMGAPI>
-Docs: <https://mo.joyent.com/docs/imgapi/master/#image-manifests>
 
 
 # Overview
