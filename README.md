@@ -8,24 +8,22 @@
     Copyright (c) 2014, Joyent, Inc.
 -->
 
-# node-imgmanifest -- a node.js lib for working with SmartOS image manifests
+# node-imgmanifest
 
-Repository: <git@github.com:joyent/node-imgmanfiest.git>
-Browsing: <https://github.com/joyent/node-imgmanifest>
-Who: Trent Mick
+This repository is part of the Joyent SmartDataCenter project (SDC).  For
+contribution guidelines, issues, and general documentation, visit the main
+[SDC](http://github.com/joyent/sdc) project page.
 
+node-imgmanifest is a node.js lib for working with SmartOS image manifests.
 
-# Overview
-
-The SmartOS/SDC Image system involves a number of pieces:
+The SmartOS/SDC *Image* world involves a number of pieces:
 
 1. The `imgadm` tool in SmartOS for installing and managing images for VM
    creation.
 2. The IMGAPI server in SmartDataCenter instances.
-3. The Joyent Images API, https://images.joyent.com.
+3. The Joyent Images API, <https://images.joyent.com>.
 4. Possibly 3rd-party IMGAPI instances.
-5. The legacy Joyent Datasets API, https://datasets.joyent.com.
-6. `*-imgadm` tools for managing the above API servers.
+5. `*-imgadm` tools for managing the above API servers.
 
 Most or all of these require being able to upgrade and validate image
 manifests. This is the library for it.
@@ -79,9 +77,4 @@ include a "message" string field. Current error "code" values are:
 
 Note: This error format is based on
 <https://mo.joyent.com/docs/eng/master/#error-handling>.
-
-
-# License
-
-CDDL
 
