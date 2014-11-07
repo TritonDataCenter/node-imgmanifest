@@ -40,5 +40,10 @@ $(NODEUNIT):
 test: | $(NODEUNIT)
 	$(NODEUNIT) test/*.test.js
 
+.PHONY: versioncheck
+versioncheck:
+	@echo version is: $(shell json -f package.json version)
+	[[ `json -f package.json version` == `grep '^## ' CHANGES.md | head -1 | awk '{print $$2}'` ]]
+
 include ./tools/mk/Makefile.deps
 include ./tools/mk/Makefile.targ
