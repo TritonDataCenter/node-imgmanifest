@@ -10,6 +10,11 @@
 
 # node-imgmanifest Changelog
 
+## 1.2.1 (not yet published)
+
+- Added `imgManifestFromDockerJson` which enables creating an imgManifest
+ from a docker image JSON.
+
 ## 1.2.0 (not yet published)
 
 - Open source (along with the rest of SDC)!  See
