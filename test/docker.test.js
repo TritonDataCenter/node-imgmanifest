@@ -83,6 +83,7 @@ function validateManifest(fn, t, expect) {
 
 // ---- validation tests
 
+/* BEGIN JSSTYLED */
 var DOCKER_IMG_JSON = {
     'id': '0e68275c469ee5a5040b8e01688fb8fac1f06138a8247265bff8ced103d01c4f',
     'parent': '5ac32a0bed16ae74a155782de096f856ac1b8d016313d60d93af948a6b06f709',
@@ -171,6 +172,7 @@ var DOCKER_IMG_JSON = {
     'os': 'linux',
     'Size': 0
 };
+/* END JSSTYLED */
 
 test('imgUuidFromDockerId', function (t) {
     t.equal('5ac32a0b-ed16-ae74-a155-782de096f856',
@@ -192,6 +194,3 @@ test('imgManifestFromDockerJson', function (t) {
     t.ok(imgmanifest.validatePrivateManifest(manifest));
     t.end();
 });
-
-
-
