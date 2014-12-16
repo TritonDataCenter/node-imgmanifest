@@ -174,6 +174,30 @@ var DOCKER_IMG_JSON = {
 };
 /* END JSSTYLED */
 
+var EXPECTED = {
+    name: 'mongo',
+    manifest: {
+        v: 2,
+        uuid: '0e68275c-469e-e5a5-040b-8e01688fb8fa',
+        owner: '00000000-0000-0000-0000-000000000000',
+        name: 'docker-layer',
+        version: '0e68275c469e',
+        state: 'unactivated',
+        activated: false,
+        disabled: false,
+        public: true,
+        published_at: '2014-11-21T02:55:35.850Z',
+        type: 'docker',
+        os: 'linux',
+        description: '/bin/sh -c #(nop) CMD [mongod]',
+        tags: {
+            /*JSSTYLED*/
+            'docker:id': '0e68275c469ee5a5040b8e01688fb8fac1f06138a8247265bff8ced103d01c4f'
+        },
+        origin: '5ac32a0b-ed16-ae74-a155-782de096f856'
+    }
+};
+
 test('imgUuidFromDockerId', function (t) {
     t.equal('5ac32a0b-ed16-ae74-a155-782de096f856',
         imgmanifest.imgUuidFromDockerId(
@@ -188,9 +212,8 @@ test('imgManifestFromDockerJson', function (t) {
     });
     t.ok(manifest);
     t.ok(manifest.uuid);
-    t.ok(imgmanifest.validateMinimalManifest(manifest));
-    t.ok(imgmanifest.validateDcManifest(manifest));
-    t.ok(imgmanifest.validatePublicManifest(manifest));
-    t.ok(imgmanifest.validatePrivateManifest(manifest));
+    validateManifest(imgmanifest.validateMinimalManifest, t, EXPECTED);
+    validateManifest(imgmanifest.validateDcManifest, t, EXPECTED);
+    validateManifest(imgmanifest.validatePublicManifest, t, EXPECTED);
     t.end();
 });
