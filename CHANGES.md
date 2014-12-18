@@ -10,12 +10,14 @@
 
 # node-imgmanifest Changelog
 
-## 1.2.1 (not yet published)
+## 1.3.0 (not yet published)
 
-- Added `imgManifestFromDockerJson` which enables creating an imgManifest
- from a docker image JSON.
+- Add "docker" to allowable values for `type`.
+- Added `imgManifestFromDockerJson` which enables creating an imgmanifest
+  from a docker image JSON.
 
-## 1.2.0 (not yet published)
+
+## 1.2.0
 
 - Open source (along with the rest of SDC)!  See
   <https://www.joyent.com/blog/sdc-and-manta-are-now-open-source>.
