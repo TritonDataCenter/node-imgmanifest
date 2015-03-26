@@ -10,7 +10,13 @@
 
 # node-imgmanifest Changelog
 
-## 1.3.0 (not yet published)
+## 1.4.0
+
+- Don't *fail* validation on presence of a "urn" field. It is deprecated but
+  not disallowed. "Validation" is just that it is a string, if present.
+
+
+## 1.3.0
 
 - Add "docker" to allowable values for `type`.
 - Added `imgManifestFromDockerJson` which enables creating an imgmanifest

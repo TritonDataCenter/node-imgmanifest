@@ -1,7 +1,7 @@
 {
   "name": "imgmanifest",
   "description": "Library for working with SmartOS/SDC image manifests",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "author": "Joyent (joyent.com)",
   "private": true,
   "main": "./lib/imgmanifest.js",

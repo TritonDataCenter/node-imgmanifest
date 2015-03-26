@@ -105,6 +105,7 @@ var MINIMAL_VALIDATIONS = [
         manifest: {
             'v': 2,
             'uuid': '1f9b7958-289e-4ea3-8f88-5486a40d6823',
+            'urn': 'booga:booga',
             'name': 'foo',
             'version': '1.2.3',
             'type': 'zone-dataset',
@@ -119,6 +120,7 @@ var MINIMAL_VALIDATIONS = [
         manifest: {
             'v': 2,
             'uuid': '1f9b7958-289e-4ea3-8f88-5486a40d6823',
+            'urn': 'booga:booga',
             'name': 'foo',
             'type': 'zone-dataset',
             'os': 'smartos'
@@ -133,6 +135,7 @@ var MINIMAL_VALIDATIONS = [
         manifest: {
             'v': 2,
             'uuid': '1f9b7958-289e-4ea3-8f88-5486a40d6823',
+            'urn': 'booga:booga',
             'type': 'zone-dataset',
             'os': 'smartos'
         }
@@ -145,6 +148,7 @@ var MINIMAL_VALIDATIONS = [
         manifest: {
             'v': 2,
             'uuid': '938fa528-f055-b045-999a-e8c638df7fa0',
+            'urn': 'booga:booga',
             'name': 'foo',
             'version': '1.2.3',
             'type': 'zone-dataset',
@@ -156,6 +160,7 @@ var MINIMAL_VALIDATIONS = [
         manifest: {
             v: 2,
             uuid: 'c153ced3-5978-cb4d-d068-e1c3b33c41ab',
+            urn: 'booga:booga',
             name: 'Hecuba',
             version: '20131204T013417Z',
             tags: { homeric: true },
@@ -176,6 +181,7 @@ var MINIMAL_VALIDATIONS = [
         manifest: {
             v: 2,
             uuid: 'c153ced3-5978-cb4d-d068-e1c3b33c41ab',
+            urn: 'booga:booga',
             name: 'Hecuba',
             version: '20131204T013417Z',
             tags: { homeric: true },
@@ -207,6 +213,7 @@ var DC_VALIDATIONS = [
         manifest: {
             'v': 2,
             'uuid': '1f9b7958-289e-4ea3-8f88-5486a40d6823',
+            'urn': 'booga:booga',
             'name': 'foo',
             'version': '1.2.3',
             'public': true,
@@ -545,6 +552,7 @@ var PUBLIC_VALIDATIONS = [
         manifest: {
             'v': 2,
             'uuid': '1f9b7958-289e-4ea3-8f88-5486a40d6823',
+            'urn': 'booga:booga',
             'name': 'foo',
             'version': '1.2.3',
             'type': 'zone-dataset',
@@ -564,6 +572,7 @@ var PUBLIC_VALIDATIONS = [
         manifest: {
             'v': 2,
             'uuid': '1f9b7958-289e-4ea3-8f88-5486a40d6823',
+            'urn': 'booga:booga',
             'name': 'foo',
             'version': '1.2.3',
             'type': 'zone-dataset',
@@ -593,6 +602,7 @@ var PRIVATE_VALIDATIONS = [
         manifest: {
             'v': 2,
             'uuid': '1f9b7958-289e-4ea3-8f88-5486a40d6823',
+            'urn': 'booga:booga',
             'name': 'foo',
             'version': '1.2.3',
             'type': 'zone-dataset',
@@ -612,6 +622,7 @@ var PRIVATE_VALIDATIONS = [
         manifest: {
             'v': 2,
             'uuid': '1f9b7958-289e-4ea3-8f88-5486a40d6823',
+            'urn': 'booga:booga',
             'name': 'foo',
             'version': '1.2.3',
             'type': 'zone-dataset',
