@@ -10,6 +10,11 @@
 
 # node-imgmanifest Changelog
 
+## 2.0.1 (not yet released)
+
+(nothing yet)
+
+
 ## 2.0.0
 
 -   *Backward incompatible* changes for Docker-related APIs primarily to change
