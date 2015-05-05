@@ -45,5 +45,11 @@ versioncheck:
 	@echo version is: $(shell json -f package.json version)
 	[[ `json -f package.json version` == `grep '^## ' CHANGES.md | head -1 | awk '{print $$2}'` ]]
 
+.PHONY: cutarelease
+cutarelease: versioncheck
+	[[ `git status | tail -n1` == "nothing to commit, working directory clean" ]]
+	./tools/cutarelease.py -p docker-registry-client -f package.json
+
+
 include ./tools/mk/Makefile.deps
 include ./tools/mk/Makefile.targ
