@@ -15,20 +15,9 @@
 var format = require('util').format;
 var exec = require('child_process').exec;
 var path = require('path');
+var test = require('tape');
 
-
-// node-tap API
-if (require.cache[__dirname + '/tap4nodeunit.js'])
-    delete require.cache[__dirname + '/tap4nodeunit.js'];
-var tap4nodeunit = require('./tap4nodeunit.js');
-var after = tap4nodeunit.after;
-var before = tap4nodeunit.before;
-var test = tap4nodeunit.test;
-
-var TOP = path.resolve(__dirname, '..');
-var info = require(path.resolve(TOP, 'package.json'));
-var main = path.resolve(TOP, info.main);
-var imgmanifest = require(main);
+var imgmanifest = require('../lib/imgmanifest');
 
 
 // ---- helpers
@@ -51,8 +40,7 @@ function validateManifest(fn, t, expect) {
     var manifest = deepObjCopy(expect.manifest);
     var errs = fn.call(null, manifest);
     if (!expect.errs) {
-        t.equal(expect.errs, errs,
-            format('expected no errs, got %j', errs));
+        t.notOk(errs, format('expected no errs, got %j', errs));
     } else {
         t.equal(expect.errs.length, errs.length, format(
             'expected %d errs, got %d', expect.errs.length, errs.length));
@@ -75,11 +63,9 @@ function validateManifest(fn, t, expect) {
             t.deepEqual(expected, got);
         }
     }
-    t.deepEqual(manifest, expect.manifest,
-        format('unexpected resultant manifest, got %j, expected %j',
-            manifest, expect.manifest));
-    t.end();
+    t.deepEqual(manifest, expect.manifest);
 }
+
 
 // ---- validation tests
 
@@ -198,22 +184,76 @@ var EXPECTED = {
     }
 };
 
-test('imgUuidFromDockerId', function (t) {
+test('obsoleteImgUuidFromDockerId', function (t) {
     t.equal('5ac32a0b-ed16-ae74-a155-782de096f856',
-        imgmanifest.imgUuidFromDockerId(
+        imgmanifest.obsoleteImgUuidFromDockerId(
         '5ac32a0bed16ae74a155782de096f856ac1b8d016313d60d93af948a6b06f709'));
     t.end();
 });
 
+test('imgUuidFromDockerInfo', function (t) {
+    t.equal('06fa62d6-c0ad-2054-bcae-0cf0db0443b4',
+        imgmanifest.imgUuidFromDockerInfo({
+            // JSSTYLED
+            id: '5ac32a0bed16ae74a155782de096f856ac1b8d016313d60d93af948a6b06f709',
+            indexName: 'docker.io'
+        }));
+    t.end();
+});
 
-test('imgManifestFromDockerJson', function (t) {
-    var manifest = imgmanifest.imgManifestFromDockerJson({
-        imgJson: DOCKER_IMG_JSON
+test('imgManifestFromDockerInfo', function (t) {
+    var manifest = imgmanifest.imgManifestFromDockerInfo({
+        imgJson: DOCKER_IMG_JSON,
+        repo: {
+            index: {
+                name: 'docker.io',
+                official: true
+            },
+            official: true,
+            remoteName: 'library/busybox',
+            localName: 'busybox',
+            canonicalName: 'docker.io/busybox'
+        }
     });
     t.ok(manifest);
     t.ok(manifest.uuid);
     validateManifest(imgmanifest.validateMinimalManifest, t, EXPECTED);
     validateManifest(imgmanifest.validateDcManifest, t, EXPECTED);
     validateManifest(imgmanifest.validatePublicManifest, t, EXPECTED);
+    t.end();
+});
+
+
+// Test being able to calls the new methods but get the obsolete image UUID
+// behaviour. This will be for dev/testing/rollout.
+test('imgUuidFromDockerInfo (obsoleteUuid)', function (t) {
+    t.equal('5ac32a0b-ed16-ae74-a155-782de096f856',
+        imgmanifest.imgUuidFromDockerInfo({
+            // JSSTYLED
+            id: '5ac32a0bed16ae74a155782de096f856ac1b8d016313d60d93af948a6b06f709',
+            indexName: 'docker.io',
+            obsoleteUuid: true
+        }));
+    t.end();
+});
+
+test('imgManifestFromDockerInfo (obsoleteUuid)', function (t) {
+    var manifest = imgmanifest.imgManifestFromDockerInfo({
+        imgJson: DOCKER_IMG_JSON,
+        repo: {
+            index: {
+                name: 'docker.io',
+                official: true
+            },
+            official: true,
+            remoteName: 'library/busybox',
+            localName: 'busybox',
+            canonicalName: 'docker.io/busybox'
+        },
+        obsoleteUuid: true
+    });
+    t.ok(manifest);
+    t.equal(manifest.uuid,
+        imgmanifest.obsoleteImgUuidFromDockerId(DOCKER_IMG_JSON.id));
     t.end();
 });

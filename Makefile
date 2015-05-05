@@ -20,7 +20,7 @@ JSL_CONF_NODE	 = tools/jsl.node.conf
 JSL_FILES_NODE   = $(JS_FILES)
 JSSTYLE_FILES	 = $(JS_FILES)
 JSSTYLE_FLAGS    = -o indent=4,doxygen,unparenthesized-return=0
-NODEUNIT	:= ./node_modules/.bin/nodeunit
+TAPE := ./node_modules/.bin/tape
 NPM 		:= npm
 
 include ./tools/mk/Makefile.defs
@@ -37,8 +37,8 @@ $(NODEUNIT):
 	$(NPM) install
 
 .PHONY: test
-test: | $(NODEUNIT)
-	$(NODEUNIT) test/*.test.js
+test: | $(TAPE)
+	@$(TAPE) test/*.test.js
 
 .PHONY: versioncheck
 versioncheck:

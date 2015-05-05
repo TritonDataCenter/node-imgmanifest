@@ -15,20 +15,9 @@
 var format = require('util').format;
 var exec = require('child_process').exec;
 var path = require('path');
+var test = require('tape');
 
-
-// node-tap API
-if (require.cache[__dirname + '/tap4nodeunit.js'])
-    delete require.cache[__dirname + '/tap4nodeunit.js'];
-var tap4nodeunit = require('./tap4nodeunit.js');
-var after = tap4nodeunit.after;
-var before = tap4nodeunit.before;
-var test = tap4nodeunit.test;
-
-var TOP = path.resolve(__dirname, '..');
-var info = require(path.resolve(TOP, 'package.json'));
-var main = path.resolve(TOP, info.main);
-var imgmanifest = require(main);
+var imgmanifest = require('../lib/imgmanifest');
 
 
 // ---- helpers
@@ -51,8 +40,7 @@ function validateManifest(fn, t, expect) {
     var manifest = deepObjCopy(expect.manifest);
     var errs = fn.call(null, manifest);
     if (!expect.errs) {
-        t.equal(expect.errs, errs,
-            format('expected no errs, got %j', errs));
+        t.notOk(errs, format('expected no errs, got %j', errs));
     } else {
         t.equal(expect.errs.length, errs.length, format(
             'expected %d errs, got %d', expect.errs.length, errs.length));
@@ -62,7 +50,7 @@ function validateManifest(fn, t, expect) {
             if (expected.message) {
                 if (expected.message.test) {
                     t.ok(expected.message.test(got.message), format(
-                        'expected errs[%d].message /%s/, got "%s"',
+                        'expected errs[%d].message %s, got "%s"',
                         i, expected.message, got.message));
                 } else {
                     t.equal(expected.message, got.message, format(
@@ -75,9 +63,7 @@ function validateManifest(fn, t, expect) {
             t.deepEqual(expected, got);
         }
     }
-    t.deepEqual(manifest, expect.manifest,
-        format('unexpected resultant manifest, got %j, expected %j',
-            manifest, expect.manifest));
+    t.deepEqual(manifest, expect.manifest);
     t.end();
 }
 

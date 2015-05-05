@@ -1,16 +1,15 @@
 {
   "name": "imgmanifest",
-  "description": "Library for working with SmartOS/SDC image manifests",
-  "version": "1.4.0",
+  "description": "Library for working with Triton/SDC/SmartOS image manifests",
+  "version": "2.0.0",
   "author": "Joyent (joyent.com)",
-  "private": true,
   "main": "./lib/imgmanifest.js",
   "dependencies": {
     "assert-plus": "0.1.2"
   },
   "devDependencies": {
     "jshint": "0.5",
-    "nodeunit": "0.7.4"
+    "tape": "4.x"
   },
   "engines": {
     "node": ">=0.8"

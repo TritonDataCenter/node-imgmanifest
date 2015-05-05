@@ -5,10 +5,30 @@
 -->
 
 <!--
-    Copyright (c) 2014, Joyent, Inc.
+    Copyright (c) 2015, Joyent, Inc.
 -->
 
 # node-imgmanifest Changelog
+
+## 2.0.0
+
+-   *Backward incompatible* changes for Docker-related APIs primarily to change
+    how a img "uuid" is determined from Docker image/layer info. Before the
+    UUID was calculated solely from a Docker image ID. Now it also incorporates
+    the Docker registry host. See <https://smartos.org/bugview/DOCKER-257> for
+    details.
+
+    | Before | After | Details |
+    | ------ | ----- | ------- |
+    | imgManifestFromDockerJson | imgManifestFromDockerInfo   | Now *requires* the 'repo' input arg and instead of a string it should be the object as from `require('docker-registry-client').parseRepo()` |
+    | imgUuidFromDockerId       | obsoleteImgUuidFromDockerId | Change to using `imgUuidFromDockerInfo` instead. |
+    | -                         | imgUuidFromDockerInfo       | The new method for determining the img "uuid", requires the repo host now. |
+
+    Note: The two new methods include a `obsoleteUuid` boolean option. This is
+    to aid in testing. It will have a short life.
+
+- Change test framework to tape.
+
 
 ## 1.4.0
 
