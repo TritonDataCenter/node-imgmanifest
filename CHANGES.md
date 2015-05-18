@@ -10,6 +10,11 @@
 
 # node-imgmanifest Changelog
 
+## 2.1.1 (not yet released)
+
+(nothing yet)
+
+
 ## 2.1.0
 
 - Change `imgManifestFromDockerJson()` to set `tags['docker:repo']` to
