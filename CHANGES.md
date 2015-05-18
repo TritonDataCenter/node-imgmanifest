@@ -12,6 +12,10 @@
 
 ## 2.1.0 (not yet released)
 
+- Change `imgManifestFromDockerJson()` to set `tags['docker:repo']` to
+  the parsed Docker repo "localName" instead of the "canonicalName".
+  This is a more typical usage string (in sdc-docker, and in docker.git
+  code itself) and doesn't lose information.
 - Support 'public' option to `imgManifestFromDockerInfo()`.
 
 
