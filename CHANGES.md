@@ -10,7 +10,7 @@
 
 # node-imgmanifest Changelog
 
-## 2.1.0 (not yet released)
+## 2.1.0
 
 - Change `imgManifestFromDockerJson()` to set `tags['docker:repo']` to
   the parsed Docker repo "localName" instead of the "canonicalName".
