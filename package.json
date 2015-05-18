@@ -1,7 +1,7 @@
 {
   "name": "imgmanifest",
   "description": "Library for working with Triton/SDC/SmartOS image manifests",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "author": "Joyent (joyent.com)",
   "main": "./lib/imgmanifest.js",
   "dependencies": {

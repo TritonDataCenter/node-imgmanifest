@@ -10,9 +10,9 @@
 
 # node-imgmanifest Changelog
 
-## 2.0.1 (not yet released)
+## 2.1.0 (not yet released)
 
-(nothing yet)
+- Support 'public' option to `imgManifestFromDockerInfo()`.
 
 
 ## 2.0.0
