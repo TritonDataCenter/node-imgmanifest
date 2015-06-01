@@ -12,12 +12,13 @@
 
 ## 2.1.1 (not yet released)
 
-(nothing yet)
+- DOCKER-424 Fix `imgManifestFromDockerInfo` to cope with a Docker `imgJson` with no
+  `container_config.Cmd`.
 
 
 ## 2.1.0
 
-- Change `imgManifestFromDockerJson()` to set `tags['docker:repo']` to
+- Change `imgManifestFromDockerInfo()` to set `tags['docker:repo']` to
   the parsed Docker repo "localName" instead of the "canonicalName".
   This is a more typical usage string (in sdc-docker, and in docker.git
   code itself) and doesn't lose information.
