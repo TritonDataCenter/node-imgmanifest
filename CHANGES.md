@@ -10,7 +10,13 @@
 
 # node-imgmanifest Changelog
 
-## 2.1.1 (not yet released)
+## 2.1.2
+
+- OS-4493 Throw an Error instead of assertion error on an invalid docker image ID
+  to `imgUuidFromDockerInfo`.
+
+
+## 2.1.1
 
 - DOCKER-424 Fix `imgManifestFromDockerInfo` to cope with a Docker `imgJson` with no
   `container_config.Cmd`.
