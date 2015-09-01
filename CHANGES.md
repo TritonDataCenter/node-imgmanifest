@@ -10,6 +10,10 @@
 
 # node-imgmanifest Changelog
 
+## 2.2.0
+
+- OS-4690 Add support for 'xz' file compression.
+
 ## 2.1.2
 
 - OS-4493 Throw an Error instead of assertion error on an invalid docker image ID

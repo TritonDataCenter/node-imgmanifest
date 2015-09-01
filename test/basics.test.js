@@ -519,6 +519,50 @@ var OPTIONAL_VALIDATIONS = [
             'generate_passwords': false,
             'inherited_directories': [ '/usr/bin' ]
         }
+    },
+    {
+        name: 'good, xz compression',
+        errs: null,
+        manifest: {
+            'v': 2,
+            'uuid': '1f9b7958-289e-4ea3-8f88-5486a40d6823',
+            'name': 'foo',
+            'version': '1.2.3',
+            'description': 'good manifest',
+            'homepage': 'http://imgapi.co',
+            'eula': 'http://imgapi.co/eula',
+            'type': 'zone-dataset',
+            'os': 'smartos',
+            'owner': '930896af-bf8c-48d4-885c-6573a94b1853',
+            'disabled': false,
+            'activated': true,
+            'state': 'active',
+            'origin': 'f9f8d4e5-30d9-438e-88f7-ea745370049b',
+            'files': [ {
+                'sha1': '3dcf0d8695bf81a05a6272ccdc5048dd025acceb',
+                'size': 121737890,
+                'compression': 'xz'
+            } ],
+            'icon': true,
+            'acl': [ 'df6ea68c-6549-486c-9479-1d48d54ae066' ],
+            'requirements': {
+                'networks': [ {
+                    'name': 'net0',
+                    'description': 'public'
+                } ],
+                'ssh_key': true
+            },
+            'users': [
+                { 'name': 'root' },
+                { 'name': 'admin' },
+                { 'name': 'mongodb'}
+            ],
+            'billing_tags': [ 'xxl' ],
+            'traits': { 'provisionable': true },
+            'tags': { 'foo': 'bar' },
+            'generate_passwords': false,
+            'inherited_directories': [ '/usr/bin' ]
+        }
     }
 ];
 
