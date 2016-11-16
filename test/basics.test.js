@@ -182,6 +182,18 @@ var MINIMAL_VALIDATIONS = [
             os: 'smartos',
             origin: 'f669428c-a939-11e2-a485-b790efc0f0c1'
         }
+    },
+    {
+        name: 'good minimal, "+" in version',
+        manifest: {
+            v: 2,
+            uuid: 'ceca6018-ac4a-11e6-b7bd-8720e9a86711',
+            name: 'withaplus',
+            version: '1.2.3+master-20131204T013417Z-gcafebab',
+            owner: '930896af-bf8c-48d4-885c-6573a94b1853',
+            type: 'zone-dataset',
+            os: 'smartos'
+        }
     }
 ];
 
