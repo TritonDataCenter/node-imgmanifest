@@ -71,8 +71,8 @@ function validateManifest(fn, t, expect) {
 
 /* BEGIN JSSTYLED */
 var DOCKER_IMG_JSON = {
-    'id': '0e68275c469ee5a5040b8e01688fb8fac1f06138a8247265bff8ced103d01c4f',
-    'parent': '5ac32a0bed16ae74a155782de096f856ac1b8d016313d60d93af948a6b06f709',
+    'digest': 'sha256:0e68275c469ee5a5040b8e01688fb8fac1f06138a8247265bff8ced103d01c4f',
+    'parent': 'sha256:5ac32a0bed16ae74a155782de096f856ac1b8d016313d60d93af948a6b06f709',
     'created': '2014-11-21T02:55:35.850292608Z',
     'container': '860121553d31b54f88b355beadb4d76f48493f89b3e0ed1536481186444694e5',
     'container_config': {
@@ -115,7 +115,7 @@ var DOCKER_IMG_JSON = {
         'OnBuild': [],
         'SecurityOpt': null
     },
-    'docker_version': '1.3.1',
+    'docker_version': '1.9.1',
     'config': {
         'Hostname': '064f0e1ce709',
         'Domainname': '',
@@ -156,7 +156,7 @@ var DOCKER_IMG_JSON = {
     },
     'architecture': 'amd64',
     'os': 'linux',
-    'Size': 0
+    'size': 0
 };
 /* END JSSTYLED */
 
@@ -178,31 +178,30 @@ var EXPECTED = {
         description: '/bin/sh -c #(nop) CMD [mongod]',
         tags: {
             /*JSSTYLED*/
-            'docker:id': '0e68275c469ee5a5040b8e01688fb8fac1f06138a8247265bff8ced103d01c4f'
+            'docker:id': 'sha256:0e68275c469ee5a5040b8e01688fb8fac1f06138a8247265bff8ced103d01c4f'
         },
         origin: '5ac32a0b-ed16-ae74-a155-782de096f856'
     }
 };
 
-test('obsoleteImgUuidFromDockerId', function (t) {
-    t.equal('5ac32a0b-ed16-ae74-a155-782de096f856',
-        imgmanifest.obsoleteImgUuidFromDockerId(
-        '5ac32a0bed16ae74a155782de096f856ac1b8d016313d60d93af948a6b06f709'));
-    t.end();
-});
-
-test('imgUuidFromDockerInfo', function (t) {
-    t.equal('06fa62d6-c0ad-2054-bcae-0cf0db0443b4',
-        imgmanifest.imgUuidFromDockerInfo({
-            // JSSTYLED
-            id: '5ac32a0bed16ae74a155782de096f856ac1b8d016313d60d93af948a6b06f709',
-            indexName: 'docker.io'
-        }));
+test('imgUuidFromDockerDigests', function (t) {
+    var uuid = imgmanifest.imgUuidFromDockerDigests([
+        DOCKER_IMG_JSON.parent,
+        DOCKER_IMG_JSON.digest
+    ]);
+    // JSSTYLED
+    var UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
+    t.ok(UUID_RE.test(uuid));
     t.end();
 });
 
 test('imgManifestFromDockerInfo', function (t) {
+    var layerDigests = [
+        DOCKER_IMG_JSON.parent,
+        DOCKER_IMG_JSON.digest
+    ];
     var manifest = imgmanifest.imgManifestFromDockerInfo({
+        layerDigests: layerDigests,
         imgJson: DOCKER_IMG_JSON,
         repo: {
             index: {
@@ -217,6 +216,7 @@ test('imgManifestFromDockerInfo', function (t) {
     });
     t.ok(manifest);
     t.ok(manifest.uuid);
+    t.equal(manifest.uuid, imgmanifest.imgUuidFromDockerDigests(layerDigests));
     validateManifest(imgmanifest.validateMinimalManifest, t, EXPECTED);
     validateManifest(imgmanifest.validateDcManifest, t, EXPECTED);
     validateManifest(imgmanifest.validatePublicManifest, t, EXPECTED);
@@ -224,36 +224,16 @@ test('imgManifestFromDockerInfo', function (t) {
 });
 
 
-// Test being able to calls the new methods but get the obsolete image UUID
-// behaviour. This will be for dev/testing/rollout.
-test('imgUuidFromDockerInfo (obsoleteUuid)', function (t) {
-    t.equal('5ac32a0b-ed16-ae74-a155-782de096f856',
-        imgmanifest.imgUuidFromDockerInfo({
-            // JSSTYLED
-            id: '5ac32a0bed16ae74a155782de096f856ac1b8d016313d60d93af948a6b06f709',
-            indexName: 'docker.io',
-            obsoleteUuid: true
-        }));
+test('dockerIdFromDigest', function (t) {
+    t.equal(imgmanifest.dockerIdFromDigest(DOCKER_IMG_JSON.digest),
+        DOCKER_IMG_JSON.digest.substr(7));
     t.end();
 });
 
-test('imgManifestFromDockerInfo (obsoleteUuid)', function (t) {
-    var manifest = imgmanifest.imgManifestFromDockerInfo({
-        imgJson: DOCKER_IMG_JSON,
-        repo: {
-            index: {
-                name: 'docker.io',
-                official: true
-            },
-            official: true,
-            remoteName: 'library/busybox',
-            localName: 'busybox',
-            canonicalName: 'docker.io/busybox'
-        },
-        obsoleteUuid: true
-    });
-    t.ok(manifest);
-    t.equal(manifest.uuid,
-        imgmanifest.obsoleteImgUuidFromDockerId(DOCKER_IMG_JSON.id));
+
+test('shortDockerId', function (t) {
+    t.equal(imgmanifest.shortDockerId(
+        imgmanifest.dockerIdFromDigest(DOCKER_IMG_JSON.digest)),
+        DOCKER_IMG_JSON.digest.substr(7, 12));
     t.end();
 });

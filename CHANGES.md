@@ -4,6 +4,11 @@
 
 (nothing yet)
 
+## 3.0.0
+
+- BREAKING change, DOCKER-929 Support registry 2.0 docker images.
+  https://docs.docker.com/registry/spec/api/
+
 ## 2.3.0
 
 - OS-5798 Allow '+' in the image manifest "version" field.
