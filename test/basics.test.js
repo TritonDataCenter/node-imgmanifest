@@ -5,7 +5,7 @@
  */
 
 /*
- * Copyright (c) 2014, Joyent, Inc.
+ * Copyright (c) 2018, Joyent, Inc.
  */
 
 /*
@@ -193,6 +193,106 @@ var MINIMAL_VALIDATIONS = [
             owner: '930896af-bf8c-48d4-885c-6573a94b1853',
             type: 'zone-dataset',
             os: 'smartos'
+        }
+    },
+    {
+        name: 'good minimal, requirements.bootrom=bios',
+        manifest: {
+            'v': 2,
+            'uuid': '1f9b7958-289e-4ea3-8f88-5486a40d6823',
+            'urn': 'booga:booga',
+            'name': 'foo',
+            'version': '1.2.3',
+            'type': 'zvol',
+            'os': 'linux',
+            'requirements': {
+                'brand': 'bhyve',
+                'bootrom': 'bios'
+            }
+        }
+    },
+    {
+        name: 'good minimal, requirements.bootrom=uefi',
+        manifest: {
+            'v': 2,
+            'uuid': '1f9b7958-289e-4ea3-8f88-5486a40d6823',
+            'urn': 'booga:booga',
+            'name': 'foo',
+            'version': '1.2.3',
+            'type': 'zvol',
+            'os': 'windows',
+            'requirements': {
+                'brand': 'bhyve',
+                'bootrom': 'uefi'
+            }
+        }
+    },
+    {
+        name: 'bad minimal, requirements.bootrom=/some/path',
+        errs: [
+            {
+                field: 'requirements.bootrom',
+                code: 'Invalid',
+                message: /invalid entry .\/some\/path/
+            }
+        ],
+        manifest: {
+            'v': 2,
+            'uuid': '1f9b7958-289e-4ea3-8f88-5486a40d6823',
+            'urn': 'booga:booga',
+            'name': 'foo',
+            'version': '1.2.3',
+            'type': 'zvol',
+            'os': 'linux',
+            'requirements': {
+                'brand': 'bhyve',
+                'bootrom': '/some/path'
+            }
+        }
+    },
+    {
+        name: 'bad minimal, requirements.bootrom without requirements.brand',
+        errs: [
+            {
+                field: 'requirements.bootrom',
+                code: 'MissingParameter',
+                message: /requirements\.brand/
+            }
+        ],
+        manifest: {
+            'v': 2,
+            'uuid': '1f9b7958-289e-4ea3-8f88-5486a40d6823',
+            'urn': 'booga:booga',
+            'name': 'foo',
+            'version': '1.2.3',
+            'type': 'zvol',
+            'os': 'linux',
+            'requirements': {
+                'bootrom': 'uefi'
+            }
+        }
+    },
+    {
+        name: 'bad minimal, requirements.bootrom with requirements.brand=kvm',
+        errs: [
+            {
+                field: 'requirements.bootrom',
+                code: 'Invalid',
+                message: /not supported with .kvm. brand/
+            }
+        ],
+        manifest: {
+            'v': 2,
+            'uuid': '1f9b7958-289e-4ea3-8f88-5486a40d6823',
+            'urn': 'booga:booga',
+            'name': 'foo',
+            'version': '1.2.3',
+            'type': 'zvol',
+            'os': 'linux',
+            'requirements': {
+                'brand': 'kvm',
+                'bootrom': 'uefi'
+            }
         }
     }
 ];
