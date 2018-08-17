@@ -4,6 +4,10 @@
 
 (nothing yet)
 
+## 3.1.0
+
+- TRITON-681 Add optional 'requirements.bootrom' validation.
+
 ## 3.0.0
 
 - BREAKING change, DOCKER-929 Support registry 2.0 docker images.

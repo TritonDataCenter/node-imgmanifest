@@ -46,6 +46,8 @@ versioncheck:
 	@echo version is: $(shell cat package.json | json version)
 	[[ `cat package.json | json version` == `grep '^## ' CHANGES.md | head -2 | tail -1 | awk '{print $$2}'` ]]
 
+check: versioncheck
+
 .PHONY: cutarelease
 cutarelease: versioncheck
 	[[ -z `git status --short` ]]  # If this fails, the working dir is dirty.
