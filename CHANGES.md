@@ -4,6 +4,10 @@
 
 (nothing yet)
 
+## 3.2.0
+
+TRITON-2228: Linux CN minimum viable product
+
 ## 3.1.0
 
 - TRITON-681 Add optional 'requirements.bootrom' validation.
