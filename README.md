@@ -1,9 +1,9 @@
 # node-imgmanifest
 
 This repository is part of the Joyent Triton project. See the [contribution
-guidelines](https://github.com/joyent/triton/blob/master/CONTRIBUTING.md)
+guidelines](https://github.com/TritonDataCenter/triton/blob/master/CONTRIBUTING.md)
 and general documentation at the main [Triton
-project](https://github.com/joyent/triton) page.
+project](https://github.com/TritonDataCenter/triton) page.
 
 node-imgmanifest is a node.js lib for working with SmartOS image manifests.
 
@@ -11,8 +11,8 @@ The SmartOS/SDC *Image* world involves a number of pieces:
 
 1. The `imgadm` tool in SmartOS for installing and managing images for VM
    creation.
-2. The IMGAPI server in SmartDataCenter instances.
-3. The Joyent Images API, <https://images.joyent.com>.
+2. The IMGAPI server in Triton instances.
+3. The SmartOS Images API, <https://images.smartos.org>.
 4. Possibly 3rd-party IMGAPI instances.
 5. `*-imgadm` tools for managing the above API servers.
 

@@ -4,9 +4,13 @@
 
 (nothing yet)
 
+## 3.2.1
+
+- TOOLS-2525 Everything needs to stop clonging with git:// URLs
+
 ## 3.2.0
 
-TRITON-2228: Linux CN minimum viable product
+- TRITON-2228: Linux CN minimum viable product
 
 ## 3.1.0
 
